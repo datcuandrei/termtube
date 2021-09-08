@@ -1,8 +1,8 @@
-# clitube
+# tuitube
 A terminal-based and privacy-focused YouTube streamer.
 
-## How does clitube work?
-It is very simple : using Invidious' API, we can get a `.json` that contains our search results. The `.json` contains the details of each video that was shown in our search. To play the video, we get the `videoId` and place it in a Invidious instance URL. clitube also gets the `author`, `viewCount` and `title` to display them after the user selects a video.
+## How does tuitube work?
+It is very simple : using Invidious' API, we can get a `.json` that contains our search results. The `.json` contains the details of each video that was shown in our search. To play the video, we get the `videoId` and place it in a Invidious instance URL. tuitube also gets the `author`, `viewCount` and `title` to display them after the user selects a video.
 
 ## What is Invidious?
 Invidious is an amazing open-source alternative front-end to YouTube.You can see more details by visiting their [repository](https://github.com/iv-org/invidious).
@@ -14,20 +14,20 @@ Unlike YouTube (or any Google service for that matter), Invidious respects the u
 Download the script and give it the execute permission by running :
 ```
 bash
-chmod +x clitube
+chmod +x tuitube
 ```
 You can run it from anywhere, but if you want to, you can move it to your `bin` directory:
 ```
 bash
-sudo mv clitube /bin/clitube
+sudo mv tuitube /bin/tuitube
 ```
 The script doesn't take any arguments, so you can simply run it by calling it.
 ```
-clitube # if moved to /bin
-./clitube # if you are using it as a portable script
+tuitube # if moved to /bin
+./tuitube # if you are using it as a portable script
 ```
 ## Preview of clitube
- ![](clitube-preview.gif)
+ ![](tuitube-preview.gif)
  
 ## Dependecies
 Make sure you have the following dependencies installed :
