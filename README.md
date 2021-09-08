@@ -26,7 +26,7 @@ The script doesn't take any arguments, so you can simply run it by calling it.
 tuitube # if moved to /bin
 ./tuitube # if you are using it as a portable script
 ```
-## Preview of clitube
+## Preview of tuitube
  ![](tuitube-preview.gif)
  
 ## Dependecies
