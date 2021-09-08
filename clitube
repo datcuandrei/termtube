@@ -36,25 +36,25 @@ echo "Search privately, using Invidious:"
 read searchQuery
 
 # temporarily downloading the search results
-curl -s "https://ytprivate.com/api/v1/search?q=$(echo $searchQuery | tr " " +),type=video&pretty=1" --output srch.json # using the -s to make curl dead silent;
+curl -s "https://ytprivate.com/api/v1/search?q=$(echo $searchQuery | tr " " +),type=video&pretty=1" --output /tmp/srch.json # using the -s to make curl dead silent;
 																									 # tr is used to replace spaces with '+'
 
 # getting all results and displaying them
 clear
 echo "Search Results"
 echo "--------------"
-grep -e "title" srch.json | cut -b 14- | grep -n "," # displaying all results; piping '-n' to count the lines.
+grep -e "title" /tmp/srch.json | cut -b 14- | grep -n "," # displaying all results; piping '-n' to count the lines.
 
 # getting the user requested video
 echo ""
-echo "Choose video [1-$(grep -e "title" srch.json | wc --lines )]" # piping wc to get the number of lines.
+echo "Choose video [1-$(grep -e "title" /tmp/srch.json | wc --lines )]" # piping wc to get the number of lines.
 read vid # variable that holds the index of the video
 
-selectedVideo=$(grep -e "title" srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the title of the selected video.
+selectedVideo=$(grep -e "title" /tmp/srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the title of the selected video.
 echo ""
-videoId=$(grep -e "videoId" srch.json | cut -b 17- | cut -b -11 | awk "NR==$vid{print;exit}") # getting the video ID
-views=$(grep -e "viewCount" srch.json | cut -b 18- | awk "NR==$vid{print;exit}") # the number of the views.
-author=$(grep -e "\"author\":" srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the author of the selected video.
+videoId=$(grep -e "videoId" /tmp/srch.json | cut -b 17- | cut -b -11 | awk "NR==$vid{print;exit}") # getting the video ID
+views=$(grep -e "viewCount" /tmp/srch.json | cut -b 18- | awk "NR==$vid{print;exit}") # the number of the views.
+author=$(grep -e "\"author\":" /tmp/srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the author of the selected video.
 
 # basic details about the selected video.
 echo "► Now playing : $selectedVideo"
@@ -65,5 +65,5 @@ echo "👁 Number of views : $views"
 echo "----------------------"
 mpv "https://ytprivate.com/watch?v=$videoId" > /dev/null # making mpv somewhat quiet
 
-rm srch.json # deleting the json file that contains the search results.
+rm /tmp/srch.json # deleting the json file that contains the search results.
 echo "Thank you for using clitube! :)"
