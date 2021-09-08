@@ -45,9 +45,9 @@ which will allow you to change the video quality on the fly. Link to it :
 https://github.com/jgreco/mpv-youtube-quality
 
 # Credits
- - [Andrei Datcu](https://datcuandrei.github.io) : creator of clitube.
+ - [Andrei Datcu](https://datcuandrei.github.io) : creator of termtube.
  - [Invidious](https://github.com/iv-org/invidious) : creators of the amazing API and private front-end for YT.
- - [mpv](https://mpv.io/) : creators of the player used by clitube.
+ - [mpv](https://mpv.io/) : creators of the player used by termtube.
 # License
 ```
 MIT License
