@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+
+# --------
+# Make sure you have the following dependencies installed :
+# - mpv
+# The following usually come with every distro, but make sure they are installed :
+# - awk
+# - grep
+# - curl
+# --------
+# By default, mpv will use the highest quality available.
+# If you want to switch the video quality, you can use the following script
+# which will allow you to change the video quality on the fly. Link to it :
+# https://github.com/jgreco/mpv-youtube-quality
+# --------
+# To search YouTube privately, I chose to use an instance of Invidious.
+# Here is a link to their API documentation:
+# https://docs.invidious.io/API.md
+# --------
+# In case the current instance used won't work, try using one of the
+# instances found in this table :
+# https://api.invidious.io/
+# --------
+# Credits:
+# - Andrei Datcu <https://datcuandrei.github.io> : creator of clitube.
+# - Invidious <https://github.com/iv-org/invidious> : creators of the amazing API and private front-end for YT.
+# - mpv <https://mpv.io/> : creators of the player used by clitube.
+
+# introduction
+clear
+echo "️clitube"
+echo "terminal-based YT streaming."
+echo "----------------------------"
+# getting the search query
+echo "Search privately, using Invidious:"
+read searchQuery
+
+# temporarily downloading the search results
+curl -s "https://ytprivate.com/api/v1/search?q=$(echo $searchQuery | tr " " +),type=video&pretty=1" --output srch.json # using the -s to make curl dead silent;
+																									 # tr is used to replace spaces with '+'
+
+# getting all results and displaying them
+clear
+echo "Search Results"
+echo "--------------"
+grep -e "title" srch.json | cut -b 14- | grep -n "," # displaying all results; piping '-n' to count the lines.
+
+# getting the user requested video
+echo ""
+echo "Choose video [1-$(grep -e "title" srch.json | wc --lines )]" # piping wc to get the number of lines.
+read vid # variable that holds the index of the video
+
+selectedVideo=$(grep -e "title" srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the title of the selected video.
+echo ""
+videoId=$(grep -e "videoId" srch.json | cut -b 17- | cut -b -11 | awk "NR==$vid{print;exit}") # getting the video ID
+views=$(grep -e "viewCount" srch.json | cut -b 18- | awk "NR==$vid{print;exit}") # the number of the views.
+author=$(grep -e "\"author\":" srch.json | cut -b 14- | awk "NR==$vid{print;exit}") # the author of the selected video.
+
+# basic details about the selected video.
+echo "► Now playing : $selectedVideo"
+echo "© Published by : $author"
+echo "👁 Number of views : $views"
+
+# playing the selected video
+echo "----------------------"
+mpv "https://ytprivate.com/watch?v=$videoId" > /dev/null # making mpv somewhat quiet
+
+rm srch.json # deleting the json file that contains the search results.
+echo "Thank you for using clitube! :)"
