@@ -61,7 +61,7 @@ echo "👁 Number of views : $views"
 
 # playing the selected video
 echo ""
-mpv --no-terminal "https://ytprivate.com/watch?v=$videoId" # making mpv quiet
+mpv "https://ytprivate.com/watch?v=$videoId"
 echo ""
 rm /tmp/srch.json # deleting the json file that contains the search results.
 
